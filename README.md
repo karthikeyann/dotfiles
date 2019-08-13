@@ -5,7 +5,6 @@ dotfiles managed across multiple machines
 ```
 cd
 git clone https://github.com/karthikeyann/dotfiles.git
-chmod +x install_dotfiles
-./install_dotfiles
+cd dotfiles && ./install_dotfiles
 ```
 
