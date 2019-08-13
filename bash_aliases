@@ -1,0 +1,255 @@
+#!/usr/bin/env bash
+
+
+### sudo hack: so you can use custom aliases as sudo
+###
+### NOTE - bash will normally stop recognizing aliases after it sees
+### the space after the command sudo, but if it sees an alias that
+### ends in a space, it will attempt to detect another alias after.
+alias sudo="sudo "
+
+### plz: re-run the last command as root.
+alias plz="fc -l -1 | cut -d' ' -f2- | xargs sudo"
+
+### incognito: no saving your command history!
+incognito() {
+  case $1 in
+    start)
+    set +o history;;
+    stop)
+    set -o history;;
+    *)
+    echo -e "USAGE: incognito start - disable command history.
+       incognito stop  - enable command history.";;
+  esac
+}
+
+alias cls="clear;ls"
+### used: recursively gets how much space is used in the current (or given) directory
+alias used="du -ch -d 1"
+
+### download: download any and every item linked from that page.
+### USAGE - download https://data.gov
+alias download="wget --random-wait -r -p --no-parent -e robots=off -U mozilla"
+
+
+alias mv='mv -i'
+alias rm='rm -i'
+
+
+# grep for a process
+function psg {
+  FIRST=`echo $1 | sed -e 's/^\(.\).*/\1/'`
+  REST=`echo $1 | sed -e 's/^.\(.*\)/\1/'`
+  ps aux | grep "[$FIRST]$REST"
+}
+
+# CWD
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+# change directories easily
+alias ..2='cd ../..'
+alias ..3='cd ../../..'
+alias ..4='cd ../../../..'
+alias ..5='cd ../../../../..'
+alias 1='cd -'
+alias 2='cd -2'
+alias 3='cd -3'
+alias 4='cd -4'
+alias 5='cd -5'
+alias 6='cd -6'
+alias 7='cd -7'
+alias 8='cd -8'
+alias 9='cd -9'
+
+# Git
+alias g='git'
+alias gs='git status'
+alias ga='git add'
+alias gaa='git add --all'
+alias gb='git branch -a'
+alias gba='git branch -a'
+alias gbc='git branch | grep \* | cut -d '\'' '\'' -f2'
+alias gbd='git branch -d'
+alias gcb='git checkout -b'
+alias gcd='git checkout develop'
+alias gcf='git config --list'
+alias gcm='git checkout master'
+alias gco='git checkout'
+alias gcon='git config -l'
+alias gcs='git commit -S'
+alias gcsm='git commit -s -m'
+alias gd='git diff'
+alias gdw='git diff --word-diff'
+alias gvd='git vimdiff'
+alias gemail='git config user.email '
+alias gf='git fetch'
+alias gfa='git fetch --all --prune'
+alias gl='git pull'
+alias glg='git log --stat'
+alias glgg='git log --graph'
+alias glgga='git log --graph --decorate --all'
+alias glgm='git log --graph --max-count=10'
+alias glgp='git log --stat -p'
+alias glo='git log --oneline --decorate'
+alias gname='git config user.name '
+alias gr='git remote -v'
+alias gra='git remote add'
+alias gpom="git push origin master"
+#source ~/.git_aliases
+
+parse_git_branch() {
+         git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+
+function git-merge-fork() {
+  cb="$(parse_git_branch)"
+  br="${1:-$cb}"
+  upbr="${2:-$br}"
+  cmd="\
+    git checkout $br;
+  git fetch upstream;
+  git reset --hard upstream/$upbr;
+  git push --force"
+  echo "$cmd"
+  while true; do
+    read -p "Do you wish to execute above commands?[y/n]:" yn
+    case $yn in
+      [Yy]* ) echo "Executing..."; 
+        git checkout $br;
+        git fetch upstream;
+        git reset --hard upstream/$upbr;
+        git push --force
+        break;;
+      [Nn]* ) break;;
+      * ) ;;
+    esac
+  done
+}
+
+alias gitsubsync="git submodule update --recursive"
+
+function gitupstreamsync() {
+  cb="$(parse_git_branch)"
+  #git checkout fea-drop_duplicates  #my development branch
+  git pull
+  git pull upstream branch-0.8
+  #resolve manually
+  #git commit -am "merged branch-0.8"
+  #git push origin $cb
+  #git push origin fea-drop_duplicates
+}
+
+showgb() {
+    #export PS1="\[\033[33m\]\$(parse_git_branch)\[\033[00m\]$PS1"
+    export PS1="($(parse_git_branch))\[\033[00m\]$PS1"
+    #export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\]$ "
+}
+
+# File System
+alias l='ls -lh'
+alias la='ls -lAhrt'
+alias lt='ls -lhrt'
+alias ll='ls -lh'
+alias lsa='ls -lah'
+alias md='mkdir -p'
+alias fp='readlink -e'
+
+# Misc Utility
+alias c='clear'
+alias calc='bc '
+alias gr='grep '
+
+# Make and change directory at once
+alias mkcd='_(){ mkdir -p $1; cd $1; }; _'
+
+# fast find
+alias ff='find . -name $1'
+
+#typos
+alias sl=ls
+alias whic=which
+alias v=vi
+alias bi=vi
+
+# apt get
+alias apt-get='sudo apt-get'
+
+function extract() {
+
+	if [[ "$#" -lt 1 ]]; then
+	  echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+	  return 1 #not enough args
+	fi
+
+	if [[ ! -e "$1" ]]; then
+	  echo -e "File does not exist!"
+	  return 2 # File not found
+	fi
+
+	DESTDIR="."
+
+	filename=`basename "$1"`
+
+	case "${filename##*.}" in
+	  tar)
+		echo -e "Extracting $1 to $DESTDIR: (uncompressed tar)"
+		tar xvf "$1" -C "$DESTDIR"
+		;;
+	  gz)
+		echo -e "Extracting $1 to $DESTDIR: (gip compressed tar)"
+		tar xvfz "$1" -C "$DESTDIR"
+		;;
+	  tgz)
+		echo -e "Extracting $1 to $DESTDIR: (gip compressed tar)"
+		tar xvfz "$1" -C "$DESTDIR"
+		;;
+	  xz)
+		echo -e "Extracting  $1 to $DESTDIR: (gip compressed tar)"
+		tar xvf -J "$1" -C "$DESTDIR"
+		;;
+	  bz2)
+		echo -e "Extracting $1 to $DESTDIR: (bzip compressed tar)"
+		tar xvfj "$1" -C "$DESTDIR"
+		;;
+      tbz2)
+	  	echo -e "Extracting $1 to $DESTDIR: (tbz2 compressed tar)"
+	  	tar xvjf "$1" -C "$DESTDIR"
+		;;
+	  zip)
+		echo -e "Extracting $1 to $DESTDIR: (zipp compressed file)"
+		unzip "$1" -d "$DESTDIR"
+		;;
+	  lzma)
+	  	echo -e "Extracting $1 : (lzma compressed file)"
+		unlzma "$1"
+		;;
+	  rar)
+		echo -e "Extracting $1 to $DESTDIR: (rar compressed file)"
+		unrar x "$1" "$DESTDIR"
+		;;
+	  7z)
+		echo -e  "Extracting $1 to $DESTDIR: (7zip compressed file)"
+		7za e "$1" -o "$DESTDIR"
+		;;
+	  xz)
+	  	echo -e  "Extracting $1 : (xz compressed file)"
+	    unxz  "$1"
+	  	;;
+	  exe)
+	   	cabextract "$1"
+	  	;;
+	  *)
+		echo -e "Unknown archieve format!"
+		return
+	  	;;
+	esac
+}
+
+if [ -f ~/.bash_paths ]; then
+    . ~/.bash_paths
+fi
+

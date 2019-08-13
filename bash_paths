@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# cuda 9.2
+#export PATH="$PATH:/usr/local/cuda-9.2/bin"
+# cuda 10.0
+export PATH="$PATH:/usr/local/cuda-10.0/bin"
+export PATH="$PATH:/home/nfs/knataraj/miniconda3/bin"
+export PATH="$PATH:/home/nfs/knataraj/.local/bin"
+
+# CUDF aliases (for productivity)
+alias setcudf="export CUDF_HOME=\`pwd\`"
+alias setdf=setcudf
+alias ev="echo \$CUDF_HOME"
+alias codf="conda activate cudf_dev"
+alias scodf="setcudf; codf;"
+alias scoda=scodf
+alias cppcmake="PARALLEL_LEVEL=20 cmake -DCMAKE_INSTALL_PREFIX=\$CONDA_PREFIX -DCMAKE_CXX11_ABI=ON .."
+alias pmake="python setup.py build_ext --inplace --library-dir=../../cpp/build"
+alias cdcudf="cd \$CUDF_HOME"
+alias cdcu=cdcudf
+alias cdhome=cdcudf
+alias cdcpp="cd \$CUDF_HOME/cpp/build"
+alias cdp="cd \$CUDF_HOME/python/cudf"
+alias cdbindings="cd \$CUDF_HOME/python/cudf/cudf/bindings"
+alias cdbind=cdbindings
+alias ctagsall="cd \$CUDF_HOME; ctags -R --exclude=python/cudf/cudf/bindings/*.pxd --languages=C,C++,Python .; cd -"
+
+## Custom notifications
+alias slacknotify=curl_slack_notify.sh
+alias notify=slacknotify
+alias notif=slacknotify
+alias not=slacknotify
+

@@ -1,0 +1,7 @@
+# This is Git's per-user configuration file.
+[user]
+# Please adapt and uncomment the following lines:
+	name = Karthikeyan Natarajan
+	email = karthikeyann@users.noreply.github.com
+[alias]
+	vimdiff = difftool --tool=vimdiff --no-prompt
