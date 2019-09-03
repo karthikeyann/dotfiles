@@ -162,6 +162,8 @@ alias fp='readlink -e'
 alias c='clear'
 alias calc='bc '
 alias gr='grep '
+alias clip='xclip -sel clip'
+alias ipy=ipython
 
 # Make and change directory at once
 alias mkcd='_(){ mkdir -p $1; cd $1; }; _'
@@ -177,6 +179,10 @@ alias bi=vi
 
 # apt get
 alias apt-get='sudo apt-get'
+
+mkcd() {  mkdir $1; cd $1; }
+scd() { cd $(dirname $1); }
+unmv() { mv $2 $1; }
 
 function extract() {
 

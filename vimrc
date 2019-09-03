@@ -3,7 +3,22 @@
 " Author: Gerhard Gappmeier
 "
 
-execute pathogen#infect()
+set nocompatible              " be iMproved, required
+filetype off                  " required
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'ericcurtin/CurtineIncSw.vim'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'vim-airline/vim-airline'
+Plugin 'Valloric/YouCompleteMe'
+"Plugin 'vim-airline/vim-airline-themes'
+
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
 filetype plugin indent on
 
 " set UTF-8 encoding
@@ -88,13 +103,14 @@ set shiftwidth=2 " controls the depth of autoindentation
 set expandtab    " converts tabs to spaces
 set laststatus=2 " show status line always
 
-autocmd Filetype cpp setlocal expandtab tabstop=2 shiftwidth=2 syntax=cpp11
+"autocmd Filetype cpp setlocal expandtab tabstop=2 shiftwidth=2 syntax=cpp11
+"autocmd Filetype cpp setlocal expandtab tabstop=2 shiftwidth=2
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4
-au BufNewFile,BufRead *.cu set ft=cuda
-au BufNewFile,BufRead *.cuh set ft=cuda
+au BufNewFile,BufRead *.cu,*.cuh set ft=cuda
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
+"let c_no_curly_error=1

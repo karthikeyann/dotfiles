@@ -5,3 +5,5 @@
 	email = karthikeyann@users.noreply.github.com
 [alias]
 	vimdiff = difftool --tool=vimdiff --no-prompt
+[core]
+	editor = vim
