@@ -255,6 +255,28 @@ function extract() {
 	esac
 }
 
+function repeat() {
+    number=$1
+    shift
+    for n in $(seq $number); do
+      "$@" || return $?
+    done
+}
+
+color() { "$@" 2>&1>&3|sed 's,.*,\x1B[31m&\x1B[0m,'>&2; } 3>&1
+
+hmake()
+{
+  /usr/bin/make "$@" 2>&1 | sed -E \
+    -e "s/error/ $(echo -e "\\033[31m" error "\\033[0m"/g)"  \
+    -e "s/warning/ $(echo -e "\\033[0;33m" warning "\\033[0m"/g)" \
+    -e "s#([^ ]+/[^/]+.*error)#`printf "\033[31m"`\1`printf "\033[0m"`#g" \
+    -e "s#([^ ]+/[^/]+.*here)#`printf "\033[34m"`\1`printf "\033[0m"`#g" \
+    -e "s#([^ ]+/[^/]+)#`printf "\033[32m"`\1`printf "\033[0m"`#g" \
+
+  return ${PIPESTATUS[0]}
+}
+
 if [ -f ~/.bash_paths ]; then
     . ~/.bash_paths
 fi
