@@ -1,4 +1,5 @@
 #!/bin/sh
+[[ "${TERM_PROGRAM}" == "vscode" ]] && export CUDF_HOME=`pwd`
 
 CUDF_HOME=${CUDF_HOME:-$HOME/cudf}
 echo "CUDF_HOME: $CUDF_HOME"
