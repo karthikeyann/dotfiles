@@ -14,7 +14,7 @@ Plugin 'ericcurtin/CurtineIncSw.vim'
 Plugin 'bfrg/vim-cpp-modern'
 Plugin 'vim-airline/vim-airline'
 "Plugin 'Valloric/YouCompleteMe'
-Plugin 'vim-syntastic/syntastic'
+"Plugin 'vim-syntastic/syntastic'
 "Plugin 'vim-airline/vim-airline-themes'
 Plugin 'rhysd/vim-clang-format'
 "let c_no_curly_error=1

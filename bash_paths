@@ -6,8 +6,9 @@
 #export PATH="$PATH:/usr/local/cuda-10.0/bin"
 # system-wide installed
 export PATH="$PATH:/usr/local/cuda/bin"
-export PATH="$PATH:/home/nfs/knataraj/miniconda3/bin"
-export PATH="$PATH:/home/nfs/knataraj/.local/bin"
+export PATH="$PATH:$HOME/miniconda3/bin"
+export PATH="$PATH:$HOME/.local/bin"
+export PARALLEL_LEVEL=12
 
 # CUDF aliases (for productivity)
 alias setcudf="export CUDF_HOME=\`pwd\`"
