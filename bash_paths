@@ -4,33 +4,20 @@
 #export PATH="$PATH:/usr/local/cuda-9.2/bin"
 # cuda 10.0
 #export PATH="$PATH:/usr/local/cuda-10.0/bin"
+export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+# ccache paths
+export PATH=/usr/local/bin${PATH:+:${PATH}}
+export CCACHE_NOHASHDIR=;
+#export CCACHE_DIR="~/.ccache";
+export CCACHE_COMPILERCHECK="%compiler% --version";
+# Set this to debug ccache preprocessor errors and cache misses
+# export CCACHE_LOGFILE="~/.ccache/ccache.log"
+
 # system-wide installed
 export PATH="$PATH:/usr/local/cuda/bin"
 export PATH="$PATH:$HOME/miniconda3/bin"
 export PATH="$PATH:$HOME/.local/bin"
 export PARALLEL_LEVEL=12
-
-# CUDF aliases (for productivity)
-alias setcudf="export CUDF_HOME=\`pwd\`"
-alias setdf=setcudf
-alias ev="echo \$CUDF_HOME"
-alias codf="conda activate cudf_dev"
-alias scodf="setcudf; codf;"
-alias scoda=scodf
-alias cppcmake="PARALLEL_LEVEL=20 cmake -DCMAKE_INSTALL_PREFIX=\$CONDA_PREFIX -DCMAKE_CXX11_ABI=ON .."
-alias pmake="python setup.py build_ext --inplace --library-dir=../../cpp/build"
-alias cdcudf="cd \$CUDF_HOME"
-alias cdcu=cdcudf
-alias cdhome=cdcudf
-alias cdcpp="cd \$CUDF_HOME/cpp/build"
-alias cdp="cd \$CUDF_HOME/python/cudf"
-alias cdbindings="cd \$CUDF_HOME/python/cudf/cudf/bindings"
-alias cdbind=cdbindings
-alias ctagsall="cd \$CUDF_HOME; ctags -R --exclude=python/cudf/cudf/bindings/*.pxd --languages=C,C++,Python .; cd -"
-
-## Custom notifications
-alias slacknotify=curl_slack_notify.sh
-alias notify=slacknotify
-alias notif=slacknotify
-alias not=slacknotify
 

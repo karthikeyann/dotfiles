@@ -46,6 +46,9 @@ set viminfo='20,<1000,s1000
 
 syntax on
 " colorscheme wombat256
+if &diff
+    colorscheme elflord
+endif
 " turn line numbers on
 set number
 " highlight matching braces

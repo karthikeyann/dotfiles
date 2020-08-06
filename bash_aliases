@@ -64,6 +64,7 @@ alias 6='cd -6'
 alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
+alias cdr='cd $(pwd -P)'
 
 # Git
 alias g='git'
@@ -157,11 +158,13 @@ alias ll='ls -lh'
 alias lsa='ls -lah'
 alias md='mkdir -p'
 alias fp='readlink -e'
+alias vdw="vimdiff -c 'set diffopt+=iwhite'"
 
 # Misc Utility
 alias c='clear'
 alias calc='bc '
 alias gr='grep '
+alias cgrep="grep --color=always"
 alias clip='xclip -sel clip'
 alias ipy=ipython
 
@@ -276,6 +279,43 @@ hmake()
 
   return ${PIPESTATUS[0]}
 }
+
+hninja()
+{
+  ninja "$@" 2>&1 | sed -E \
+    -e "s/error/ $(echo -e "\\033[31m" error "\\033[0m"/g)"  \
+    -e "s/warning/ $(echo -e "\\033[0;33m" warning "\\033[0m"/g)" \
+    -e "s#([^ ]+/[^/]+.*error)#`printf "\033[31m"`\1`printf "\033[0m"`#g" \
+    -e "s#([^ ]+/[^/]+.*here)#`printf "\033[34m"`\1`printf "\033[0m"`#g" \
+    -e "s#([^ ]+/[^/]+)#`printf "\033[32m"`\1`printf "\033[0m"`#g" \
+
+  return ${PIPESTATUS[0]}
+}
+
+
+# CUDF aliases (for productivity)
+alias setcudf="export CUDF_HOME=\`pwd\`"
+alias setdf=setcudf
+alias ev="echo \$CUDF_HOME"
+alias codf="conda activate cudf_dev"
+alias scodf="setcudf; codf;"
+alias scoda=scodf
+alias cppcmake="PARALLEL_LEVEL=20 cmake -DCMAKE_INSTALL_PREFIX=\$CONDA_PREFIX -DCMAKE_CXX11_ABI=ON .."
+alias pmake="python setup.py build_ext --inplace --library-dir=../../cpp/build"
+alias cdcudf="cd \$CUDF_HOME"
+#alias cdcpp="cd \$CUDF_HOME/cpp/build/release &>/dev/null || cd \$CUDF_HOME/cpp/build"
+alias cdcpp="cd \$(readlink \$CUDF_HOME/cpp/build/release) &>/dev/null || cd \$CUDF_HOME/cpp/build"
+alias cdp="cd \$CUDF_HOME/python/cudf"
+alias cdbindings="cd \$CUDF_HOME/python/cudf/cudf/bindings"
+alias cdbind=cdbindings
+alias ctagsall="cd \$CUDF_HOME; ctags -R --exclude=python/cudf/cudf/bindings/*.pxd --languages=C,C++,Python .; cd -"
+
+## Custom notifications
+alias slacknotify=curl_slack_notify.sh
+alias notify=slacknotify
+alias notif=slacknotify
+alias not=slacknotify
+
 
 if [ -f ~/.bash_paths ]; then
     . ~/.bash_paths
