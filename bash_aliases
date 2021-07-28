@@ -165,6 +165,7 @@ alias c='clear'
 alias calc='bc '
 alias gr='grep '
 alias cgrep="grep --color=always"
+alias highlight='egrep -e ^ -e '
 alias clip='xclip -sel clip'
 alias ipy=ipython
 
@@ -317,6 +318,7 @@ alias notif=slacknotify
 alias not=slacknotify
 
 
+export PATH="$PATH:$HOME/.local/bin"
 if [ -f ~/.bash_paths ]; then
     . ~/.bash_paths
 fi

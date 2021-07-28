@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-CUDA_VERSION="-10.2"
-export PATH=/usr/local/cuda${CUDA_VERSION}/bin${PATH:+:${PATH}}
-export LD_LIBRARY_PATH=/usr/local/cuda${CUDA_VERSION}/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+MY_CUDA_VERSION="11.2"
+export PATH=/usr/local/cuda-${MY_CUDA_VERSION}/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda-${MY_CUDA_VERSION}/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
 # ccache paths
 export PATH=/usr/local/bin${PATH:+:${PATH}}
@@ -13,7 +13,7 @@ export CCACHE_COMPILERCHECK="%compiler% --version";
 
 # system-wide installed
 export PATH="$PATH:/usr/local/cuda/bin"
-export PATH="$PATH:$HOME/miniconda3/bin"
+#export PATH="$PATH:$HOME/miniconda3/bin"
 export PATH="$PATH:$HOME/.local/bin"
 export PARALLEL_LEVEL=12
 

@@ -11,4 +11,5 @@ export OLD_PYTHONPATH=$PYTHONPATH
 export OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 export PYTHONPATH=$PYTHONPATH:$CUDF_PYTHON_HOME/cudf:$CUDF_PYTHON_HOME/nvstrings:$CUDF_PYTHON_HOME/nvstrings/build:$CUDF_PYTHON_HOME/dask_cudf
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDF_CPP_HOME:$CUDF_CPP_HOME/release
+export BOOST_ROOT=$CONDA_PREFIX
 source /home/karthikeyan/dev/rapids/compose/etc/bash-utils.sh
