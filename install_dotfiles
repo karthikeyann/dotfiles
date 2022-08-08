@@ -10,7 +10,7 @@ IPYTHON_ROOT=~/.ipython # full IPython customizations needs it own directory ...
 # below the fold
 
 # install main config files
-for dotfile in bash_aliases  bash_paths  git_aliases  gitconfig  inputrc  vimrc
+for dotfile in bash_aliases  bash_paths  git_aliases  gitconfig  inputrc  vimrc bcrc
 #bashrc vimrc gitconfig xmodmap inputrc hgrc curlrc tmux.conf plan caffrc pypirc sblrc screenrc
 do
     if [ -L ~/.${dotfile} ]
