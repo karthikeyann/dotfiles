@@ -188,6 +188,17 @@ mkcd() {  mkdir $1; cd $1; }
 scd() { cd $(dirname $1); }
 unmv() { mv $2 $1; }
 
+function ci() {
+  local FILE=$1
+  local filename=${FILE%:*}
+  local linenumb=${FILE##*:}
+  #filename=$(echo $FILE | cut -f1 -d:)
+  #linenumb=$(echo $FILE | cut -f2 -d:)
+  echo $linenumb
+  vi $filename -c :$linenumb
+  return ${PIPESTATUS[0]}
+}
+
 function extract() {
 
 	if [[ "$#" -lt 1 ]]; then
@@ -293,6 +304,21 @@ hninja()
   return ${PIPESTATUS[0]}
 }
 
+# usage: clone_rapids karthikeyann cudf 5cudf
+clone_rapids () {
+  GITHUB_USER=$1
+  REPO=$2
+  DIR=${3:-$2}
+  echo "1 $1 2 $2 @ $DIR"
+  git clone --no-tags -c checkout.defaultRemote=upstream -j $(nproc) \
+           --recurse-submodules https://github.com/rapidsai/$REPO.git $DIR
+  cd $DIR
+  git remote show | grep upstream || git remote add -f --tags upstream git@github.com:rapidsai/$REPO.git
+  git remote set-url origin git@github.com:$GITHUB_USER/$REPO.git
+  git remote set-url --push upstream read_only
+  echo -e "cpp/.clangd/\ncpp/compile_commands.json\n*.code-workspace" >> .git/info/exclude
+}
+
 
 # CUDF aliases (for productivity)
 alias setcudf="export CUDF_HOME=\`pwd\`"
@@ -310,6 +336,8 @@ alias cdp="cd \$CUDF_HOME/python/cudf"
 alias cdbindings="cd \$CUDF_HOME/python/cudf/cudf/bindings"
 alias cdbind=cdbindings
 alias ctagsall="cd \$CUDF_HOME; ctags -R --exclude=python/cudf/cudf/bindings/*.pxd --languages=C,C++,Python .; cd -"
+alias build="bash -c \"update-environment-variables && CCACHE_BASEDIR=\$PWD ninja -C \$CUDF_ROOT\""
+alias b=build
 
 ## Custom notifications
 alias slacknotify=curl_slack_notify.sh

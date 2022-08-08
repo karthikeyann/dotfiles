@@ -70,7 +70,19 @@ set tags+=../../../../../../../tags
 set tags+=../../../../../../../../tags
 
 " Install DoxygenToolkit from http://www.vim.org/scripts/script.php?script_id=987
-let g:DoxygenToolkit_authorName="Karthikeyan Natarajan<knataraj@nvidia.com>"
+let g:DoxygenToolkit_authorName="Karthikeyan Natarajan"
+function! OpenLog()
+    let line = getline(".")
+    let items = split(line, ':')
+    if filereadable(items[0])
+      " tabnew
+	    exe "e ".items[0]
+	    exe ":".items[1]
+endif
+endfunction
+nnoremap gf :call OpenLog()<CR>
+
+
 
 " Enhanced keyboard mappings
 "
@@ -152,3 +164,7 @@ autocmd FileType c,cpp,objc,cuda vnoremap <buffer><Leader>cf :ClangFormat<CR>
 " Toggle auto formatting:
 nmap <Leader>C :ClangFormatAutoToggle<CR>
 "autocmd FileType c,cpp,objc ClangFormatAutoEnable
+
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+hi Search ctermbg=DarkYellow
+
