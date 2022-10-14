@@ -5,23 +5,23 @@
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'ericcurtin/CurtineIncSw.vim'
-Plugin 'bfrg/vim-cpp-modern'
-Plugin 'vim-airline/vim-airline'
-"Plugin 'Valloric/YouCompleteMe'
-"Plugin 'vim-syntastic/syntastic'
-"Plugin 'vim-airline/vim-airline-themes'
-Plugin 'rhysd/vim-clang-format'
-"let c_no_curly_error=1
-
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
+"" set the runtime path to include Vundle and initialize
+"set rtp+=~/.vim/bundle/Vundle.vim
+"call vundle#begin()
+"Plugin 'VundleVim/Vundle.vim'
+"Plugin 'tpope/vim-fugitive'
+"Plugin 'ericcurtin/CurtineIncSw.vim'
+"Plugin 'bfrg/vim-cpp-modern'
+"Plugin 'vim-airline/vim-airline'
+""Plugin 'Valloric/YouCompleteMe'
+""Plugin 'vim-syntastic/syntastic'
+""Plugin 'vim-airline/vim-airline-themes'
+"Plugin 'rhysd/vim-clang-format'
+""let c_no_curly_error=1
+"
+"
+"" All of your Plugins must be added before the following line
+"call vundle#end()            " required
 filetype plugin indent on
 
 " set UTF-8 encoding
@@ -133,10 +133,10 @@ if has("autocmd")
 endif
 "let c_no_curly_error=1
 
-"syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+""syntastic
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
