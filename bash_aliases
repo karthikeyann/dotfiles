@@ -273,9 +273,11 @@ color() { "$@" 2>&1>&3|sed 's,.*,\x1B[31m&\x1B[0m,'>&2; } 3>&1
 alias setcudf="export CUDF_HOME=\`pwd\`"
 alias ev="echo \$CUDF_HOME"
 alias cdcudf="cd \$CUDF_HOME"
-alias cdcpp="cd \$(readlink \$CUDF_HOME/cpp/build/release) &>/dev/null || cd \$CUDF_HOME/cpp/build"
+#alias cdcpp="cd \$(readlink -e \$CUDF_HOME/cpp/build/latest) &>/dev/null || cd \$CUDF_HOME/cpp/build"
+alias cdcpp="cd \$CUDF_HOME/cpp/build/latest &>/dev/null || cd \$CUDF_HOME/cpp/build"
 #alias ctagsall="cd \$CUDF_HOME; ctags -R --exclude=python/cudf/cudf/bindings/*.pxd --languages=C,C++,Python .; cd -"
 alias b="build-cudf-cpp -n"
+alias bp="build-cudf-python"
 
 ## Custom notifications
 alias slacknotify=curl_slack_notify.sh
