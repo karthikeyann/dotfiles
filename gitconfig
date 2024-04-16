@@ -3,7 +3,11 @@
 # Please adapt and uncomment the following lines:
 	name = Karthikeyan Natarajan
 	email = karthikeyann@users.noreply.github.com
+[difftool "nvimdiff"]
+    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[alias]
+        nvimdiff = difftool --tool=nvimdiff --no-prompt
 [alias]
 	vimdiff = difftool --tool=vimdiff --no-prompt
 [core]
-	editor = vim
+	editor = nvim
