@@ -70,7 +70,7 @@ alias cdr='cd $(pwd -P)'
 alias g='git'
 alias gs='git status'
 alias ga='git add'
-alias gaa='git add --all'
+alias gau='git add -u'
 alias gb='git branch -a'
 alias gba='git branch -a'
 alias gbc='git branch | grep \* | cut -d '\'' '\'' -f2'
@@ -133,17 +133,6 @@ function git-merge-fork() {
 
 alias gitsubsync="git submodule update --recursive"
 
-function gitupstreamsync() {
-  cb="$(parse_git_branch)"
-  #git checkout fea-drop_duplicates  #my development branch
-  git pull
-  git pull upstream branch-0.8
-  #resolve manually
-  #git commit -am "merged branch-0.8"
-  #git push origin $cb
-  #git push origin fea-drop_duplicates
-}
-
 showgb() {
     #export PS1="\[\033[33m\]\$(parse_git_branch)\[\033[00m\]$PS1"
     export PS1="($(parse_git_branch))\[\033[00m\]$PS1"
@@ -182,7 +171,7 @@ alias v=vi
 alias bi=vi
 
 # apt get
-alias apt-get='sudo apt-get'
+#alias apt-get='sudo apt-get'
 
 mkcd() {  mkdir $1; cd $1; }
 scd() { cd $(dirname $1); }
@@ -280,74 +269,19 @@ function repeat() {
 
 color() { "$@" 2>&1>&3|sed 's,.*,\x1B[31m&\x1B[0m,'>&2; } 3>&1
 
-hmake()
-{
-  /usr/bin/make "$@" 2>&1 | sed -E \
-    -e "s/error/ $(echo -e "\\033[31m" error "\\033[0m"/g)"  \
-    -e "s/warning/ $(echo -e "\\033[0;33m" warning "\\033[0m"/g)" \
-    -e "s#([^ ]+/[^/]+.*error)#`printf "\033[31m"`\1`printf "\033[0m"`#g" \
-    -e "s#([^ ]+/[^/]+.*here)#`printf "\033[34m"`\1`printf "\033[0m"`#g" \
-    -e "s#([^ ]+/[^/]+)#`printf "\033[32m"`\1`printf "\033[0m"`#g" \
-
-  return ${PIPESTATUS[0]}
-}
-
-hninja()
-{
-  ninja "$@" 2>&1 | sed -E \
-    -e "s/error/ $(echo -e "\\033[31m" error "\\033[0m"/g)"  \
-    -e "s/warning/ $(echo -e "\\033[0;33m" warning "\\033[0m"/g)" \
-    -e "s#([^ ]+/[^/]+.*error)#`printf "\033[31m"`\1`printf "\033[0m"`#g" \
-    -e "s#([^ ]+/[^/]+.*here)#`printf "\033[34m"`\1`printf "\033[0m"`#g" \
-    -e "s#([^ ]+/[^/]+)#`printf "\033[32m"`\1`printf "\033[0m"`#g" \
-
-  return ${PIPESTATUS[0]}
-}
-
-# usage: clone_rapids karthikeyann cudf 5cudf
-clone_rapids () {
-  GITHUB_USER=$1
-  REPO=$2
-  DIR=${3:-$2}
-  echo "1 $1 2 $2 @ $DIR"
-  git clone --no-tags -c checkout.defaultRemote=upstream -j $(nproc) \
-           --recurse-submodules https://github.com/rapidsai/$REPO.git $DIR
-  cd $DIR
-  git remote show | grep upstream || git remote add -f --tags upstream git@github.com:rapidsai/$REPO.git
-  git remote set-url origin git@github.com:$GITHUB_USER/$REPO.git
-  git remote set-url --push upstream read_only
-  echo -e "cpp/.clangd/\ncpp/compile_commands.json\n*.code-workspace" >> .git/info/exclude
-}
-
-
 # CUDF aliases (for productivity)
 alias setcudf="export CUDF_HOME=\`pwd\`"
-alias setdf=setcudf
 alias ev="echo \$CUDF_HOME"
-alias codf="conda activate cudf_dev"
-alias scodf="setcudf; codf;"
-alias scoda=scodf
-alias cppcmake="PARALLEL_LEVEL=20 cmake -DCMAKE_INSTALL_PREFIX=\$CONDA_PREFIX -DCMAKE_CXX11_ABI=ON .."
-alias pmake="python setup.py build_ext --inplace --library-dir=../../cpp/build"
 alias cdcudf="cd \$CUDF_HOME"
-#alias cdcpp="cd \$CUDF_HOME/cpp/build/release &>/dev/null || cd \$CUDF_HOME/cpp/build"
 alias cdcpp="cd \$(readlink \$CUDF_HOME/cpp/build/release) &>/dev/null || cd \$CUDF_HOME/cpp/build"
-alias cdp="cd \$CUDF_HOME/python/cudf"
-alias cdbindings="cd \$CUDF_HOME/python/cudf/cudf/bindings"
-alias cdbind=cdbindings
-alias ctagsall="cd \$CUDF_HOME; ctags -R --exclude=python/cudf/cudf/bindings/*.pxd --languages=C,C++,Python .; cd -"
-alias build="bash -c \"update-environment-variables && CCACHE_BASEDIR=\$PWD ninja -C \$CUDF_ROOT\""
-alias b=build
+#alias ctagsall="cd \$CUDF_HOME; ctags -R --exclude=python/cudf/cudf/bindings/*.pxd --languages=C,C++,Python .; cd -"
+alias b="build-cudf-cpp -n"
 
 ## Custom notifications
 alias slacknotify=curl_slack_notify.sh
-alias notify=slacknotify
-alias notif=slacknotify
-alias not=slacknotify
 
 
 export PATH="$PATH:$HOME/.local/bin"
 if [ -f ~/.bash_paths ]; then
     . ~/.bash_paths
 fi
-
