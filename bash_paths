@@ -1,20 +1,6 @@
 #!/usr/bin/env bash
-#MY_CUDA_VERSION="11.5"
-#MY_CUDA_VERSION="11.2"
-#export PATH=/usr/local/cuda-${MY_CUDA_VERSION}/bin${PATH:+:${PATH}}
-#export LD_LIBRARY_PATH=/usr/local/cuda-${MY_CUDA_VERSION}/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-#
-## ccache paths
-#export PATH=/usr/local/bin${PATH:+:${PATH}}
-#export CCACHE_NOHASHDIR=;
-##export CCACHE_DIR="~/.ccache";
-#export CCACHE_COMPILERCHECK="%compiler% --version";
-## Set this to debug ccache preprocessor errors and cache misses
-## export CCACHE_LOGFILE="~/.ccache/ccache.log"
-#
 ## system-wide installed
 #export PATH="$PATH:/usr/local/cuda/bin"
-##export PATH="$PATH:$HOME/miniconda3/bin"
 #export PATH="$PATH:$HOME/.local/bin"
 #export PARALLEL_LEVEL=12
 export BC_ENV_ARGS="-l $HOME/.bcrc"
