@@ -1,19 +1,24 @@
 # Git status alias
-alias g='git status -sb'
+alias g='git'
+alias gs='git status'
+#alias gs='git status -sb'
 
 # Git add and remove aliases
 alias ga='git add'
+alias gau='git add -u'
 alias gr='git rm'
 
 # Git branch alias
 alias gb='git branch -v'
-alias gba='git for-each-ref --sort=committerdate refs/heads/ --format="%(authordate:short) %(color:red)%(objectname:short) %(color:yellow)%(refname:short)%(color:reset) (%(color:green)%(committerdate:relative)%(color:reset))"'
+alias gba='git branch -a'
 alias gbd='git for-each-ref --sort=-committerdate refs/heads/ --format="%(authordate:short) %(color:red)%(objectname:short) %(color:yellow)%(refname:short)%(color:reset) (%(color:green)%(committerdate:relative)%(color:reset))"'
 
 # Git commit aliases
 alias gc='git commit'
 alias gca='git commit --amend'
 alias gcm='git commit -m'
+alias gcs='git commit -S'
+alias gcsm='git commit -s -m'
 
 # Git checkout aliases
 alias gcod='git checkout develop'
@@ -25,7 +30,8 @@ alias gf='git fetch'
 alias gfa='git fetch --all'
 
 # Git pull alias
-alias gp='git pull --rebase'
+alias gp='git pull --ff'
+alias gpr='git pull --rebase'
 
 # Git pull from origin aliases
 alias gprod='git pull --rebase origin develop'
@@ -79,4 +85,41 @@ delete_branches_except() {
 
     cmd=$cmd' | xargs git branch -D'
     eval $cmd
+}
+
+parse_git_branch() {
+         git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+
+function git-merge-fork() {
+  cb="$(parse_git_branch)"
+  br="${1:-$cb}"
+  upbr="${2:-$br}"
+  cmd="\
+    git checkout $br;
+  git fetch upstream;
+  git reset --hard upstream/$upbr;
+  git push --force"
+  echo "$cmd"
+  while true; do
+    read -p "Do you wish to execute above commands?[y/n]:" yn
+    case $yn in
+      [Yy]* ) echo "Executing..."; 
+        git checkout $br;
+        git fetch upstream;
+        git reset --hard upstream/$upbr;
+        git push --force
+        break;;
+      [Nn]* ) break;;
+      * ) ;;
+    esac
+  done
+}
+
+alias gitsubsync="git submodule update --recursive"
+
+showgb() {
+    #export PS1="\[\033[33m\]\$(parse_git_branch)\[\033[00m\]$PS1"
+    export PS1="($(parse_git_branch))\[\033[00m\]$PS1"
+    #export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\]$ "
 }
