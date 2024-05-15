@@ -66,79 +66,6 @@ alias 8='cd -8'
 alias 9='cd -9'
 alias cdr='cd $(pwd -P)'
 
-# Git
-alias g='git'
-alias gs='git status'
-alias ga='git add'
-alias gau='git add -u'
-alias gb='git branch -a'
-alias gba='git branch -a'
-alias gbc='git branch | grep \* | cut -d '\'' '\'' -f2'
-alias gbd='git branch -d'
-alias gcb='git checkout -b'
-alias gcd='git checkout develop'
-alias gcf='git config --list'
-alias gcm='git checkout master'
-alias gco='git checkout'
-alias gcon='git config -l'
-alias gcs='git commit -S'
-alias gcsm='git commit -s -m'
-alias gd='git diff'
-alias gdw='git diff --word-diff'
-alias gvd='git vimdiff'
-alias gemail='git config user.email '
-alias gf='git fetch'
-alias gfa='git fetch --all --prune'
-alias gl='git pull'
-alias glg='git log --stat'
-alias glgg='git log --graph'
-alias glgga='git log --graph --decorate --all'
-alias glgm='git log --graph --max-count=10'
-alias glgp='git log --stat -p'
-alias glo='git log --oneline --decorate'
-alias gname='git config user.name '
-alias gr='git remote -v'
-alias gra='git remote add'
-alias gpom="git push origin master"
-#source ~/.git_aliases
-
-parse_git_branch() {
-         git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
-}
-
-function git-merge-fork() {
-  cb="$(parse_git_branch)"
-  br="${1:-$cb}"
-  upbr="${2:-$br}"
-  cmd="\
-    git checkout $br;
-  git fetch upstream;
-  git reset --hard upstream/$upbr;
-  git push --force"
-  echo "$cmd"
-  while true; do
-    read -p "Do you wish to execute above commands?[y/n]:" yn
-    case $yn in
-      [Yy]* ) echo "Executing..."; 
-        git checkout $br;
-        git fetch upstream;
-        git reset --hard upstream/$upbr;
-        git push --force
-        break;;
-      [Nn]* ) break;;
-      * ) ;;
-    esac
-  done
-}
-
-alias gitsubsync="git submodule update --recursive"
-
-showgb() {
-    #export PS1="\[\033[33m\]\$(parse_git_branch)\[\033[00m\]$PS1"
-    export PS1="($(parse_git_branch))\[\033[00m\]$PS1"
-    #export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\]$ "
-}
-
 # File System
 alias l='ls -lh'
 alias la='ls -lAhrt'
@@ -286,4 +213,8 @@ alias slacknotify=curl_slack_notify.sh
 export PATH="$PATH:$HOME/.local/bin"
 if [ -f ~/.bash_paths ]; then
     . ~/.bash_paths
+fi
+
+if [ -f ~/.git_aliases ]; then
+    . ~/.git_aliases
 fi
