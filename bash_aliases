@@ -24,7 +24,6 @@ incognito() {
   esac
 }
 
-alias cls="clear;ls"
 ### used: recursively gets how much space is used in the current (or given) directory
 alias used="du -ch -d 1"
 
@@ -32,7 +31,7 @@ alias used="du -ch -d 1"
 ### USAGE - download https://data.gov
 alias download="wget --random-wait -r -p --no-parent -e robots=off -U mozilla"
 
-
+# Move/Delete with interactive confirmation
 alias mv='mv -i'
 alias rm='rm -i'
 
@@ -78,6 +77,7 @@ alias vdw="vimdiff -c 'set diffopt+=iwhite'"
 
 # Misc Utility
 alias c='clear'
+alias cls="clear;ls"
 alias calc='bc '
 alias gr='grep '
 alias cgrep="grep --color=always"
@@ -200,8 +200,8 @@ color() { "$@" 2>&1>&3|sed 's,.*,\x1B[31m&\x1B[0m,'>&2; } 3>&1
 alias setcudf="export CUDF_HOME=\`pwd\`"
 alias ev="echo \$CUDF_HOME"
 alias cdcudf="cd \$CUDF_HOME"
+alias cdcpp="cd \$(git rev-parse --show-toplevel)/cpp/build/latest &>/dev/null || cd \$(git rev-parse --show-toplevel)/cpp/build"
 #alias cdcpp="cd \$(readlink -e \$CUDF_HOME/cpp/build/latest) &>/dev/null || cd \$CUDF_HOME/cpp/build"
-alias cdcpp="cd \$CUDF_HOME/cpp/build/latest &>/dev/null || cd \$CUDF_HOME/cpp/build"
 #alias ctagsall="cd \$CUDF_HOME; ctags -R --exclude=python/cudf/cudf/bindings/*.pxd --languages=C,C++,Python .; cd -"
 alias b="build-cudf-cpp -n"
 alias bp="build-cudf-python"

@@ -15,7 +15,7 @@
     cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [alias]
         nvimdiff = difftool --tool=nvimdiff --no-prompt
-[alias]
 	vimdiff = difftool --tool=vimdiff --no-prompt
+	root = rev-parse --show-toplevel
 [core]
 	editor = nvim
