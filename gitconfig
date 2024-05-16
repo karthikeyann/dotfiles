@@ -1,8 +1,16 @@
 # This is Git's per-user configuration file.
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
 [user]
-# Please adapt and uncomment the following lines:
 	name = Karthikeyan Natarajan
 	email = karthikeyann@users.noreply.github.com
+	signingkey = A0C59561D8D3853D5F1FE73305B5505FBF4325EA
+[commit]
+	gpgsign = true
 [difftool "nvimdiff"]
     cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [alias]
