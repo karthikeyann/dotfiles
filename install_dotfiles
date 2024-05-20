@@ -1,65 +1,9 @@
 #!/bin/bash -eu
-
-SCRIPTS_FOLDER=~/.scripts # Change this to wherever you keep custom scripts, this should be in you $PATH variable
-VIM_ROOT=~/.vim # The user vim directory for bundle managed plugins
-IPYTHON_ROOT=~/.ipython # full IPython customizations needs it own directory ...
-
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
+bash -c "chezmoi init --apply https://github.com/karthikeyann/dotfiles.git"
+bash -c "chezmoi init --apply karthikeyann"
 
 # Above the fold
 ######################################################################################################################
 # below the fold
 
-# install main config files
-for dotfile in bash_aliases  bash_paths  git_aliases  gitconfig  inputrc  vimrc bcrc
-#bashrc vimrc gitconfig xmodmap inputrc hgrc curlrc tmux.conf plan caffrc pypirc sblrc screenrc
-do
-    if [ -L ~/.${dotfile} ]
-    then
-        rm ~/.${dotfile}
-    fi
-    ln -sv $(pwd)/${dotfile} ~/.${dotfile}
-done
-
-## install .vim/vim for vim vundle
-#if [ -L ${VIM_ROOT}/vim ]
-#then
-#    rm ${VIM_ROOT}/vim
-#fi
-#ln -sv $(pwd)/vim ${VIM_ROOT}
-#
-#mkdir -p ${IPYTHON_ROOT}/profile_default
-#
-## install ipython config dir
-#if [ -L ${IPYTHON_ROOT}/profile_default/ipython_config.py ]
-#then
-#    rm ${IPYTHON_ROOT}/profile_default/ipython_config.py
-#fi
-#ln -sv $(pwd)/ipython_config.py ${IPYTHON_ROOT}/profile_default/ipython_config.py
-#
-## install scripts folder
-#if [ ! -d ${SCRIPTS_FOLDER} ]
-#then
-#    mkdir -p ${SCRIPTS_FOLDER}
-#fi
-#
-## put scripts in scripts folder
-#for script in scripts/*
-#do
-#    if [ ! -e ${SCRIPTS_FOLDER}/$(basename ${script}) ]
-#    then
-#	  ln -sv $(readlink -f ${script}) ${SCRIPTS_FOLDER}/$(basename ${script})
-#    fi
-#done
-#
-#echo -e "\n\nIf vim shows attitude, run:"
-#echo -e "git clone https://github.com/gmarik/Vundle.vim.git ${VIM_ROOT}/bundle/Vundle.vim"
-#echo -e "vim +PluginInstall +qall"
-#
-#if [ ! -d ${VIM_ROOT}/bundle ]
-#    then
-#    echo "Ok, ok, I am already trying to do that"
-#    git clone https://github.com/gmarik/Vundle.vim.git ${VIM_ROOT}/bundle/Vundle.vim
-#    echo "And now let's try to install all those pesky plugins ..."
-#    vim +PluginInstall +qall
-#    echo "Done!"
-#fi

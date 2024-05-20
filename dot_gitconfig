@@ -18,4 +18,4 @@
 	vimdiff = difftool --tool=vimdiff --no-prompt
 	root = rev-parse --show-toplevel
 [core]
-	editor = nvim
+	editor = vim
