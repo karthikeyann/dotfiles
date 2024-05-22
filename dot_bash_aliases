@@ -97,6 +97,9 @@ alias whic=which
 alias v=vi
 alias bi=vi
 
+#installed binaries
+if type nvim &>/dev/null; then alias vi=nvim; fi
+
 # apt get
 #alias apt-get='sudo apt-get'
 
