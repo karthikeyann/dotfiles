@@ -2,6 +2,7 @@
 sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
 bash -c "chezmoi init --apply https://github.com/karthikeyann/dotfiles.git"
 bash -c "chezmoi init --apply karthikeyann"
+echo "Installed dotfiles"
 
 # Above the fold
 ######################################################################################################################
