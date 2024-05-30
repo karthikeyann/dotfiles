@@ -1,7 +1,7 @@
 #!/bin/bash -eu
 sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
 #bash -c "chezmoi init --apply https://github.com/karthikeyann/dotfiles.git"
-bash -c "chezmoi init --apply karthikeyann"
+bash -c "chezmoi init --apply karthikeyann --force"
 echo "Installed dotfiles"
 
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz --output-dir /tmp
