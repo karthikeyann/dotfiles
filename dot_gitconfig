@@ -17,5 +17,6 @@
         nvimdiff = difftool --tool=nvimdiff --no-prompt
 	vimdiff = difftool --tool=vimdiff --no-prompt
 	root = rev-parse --show-toplevel
+	resign = "!re() { git rebase --exec 'git commit --amend --no-edit -n -S' -i $1; }; re"
 [core]
 	editor = vim
