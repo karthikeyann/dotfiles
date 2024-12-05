@@ -1,3 +1,9 @@
+# Custom gh alias
+alias oktt='gh pr comment --body "/ok to test"'
+alias commit='git commit -S -m'
+alias push='git push'
+#TODO add more aliases
+
 # Git status alias
 alias g='git'
 alias gs='git status'
