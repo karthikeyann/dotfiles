@@ -168,3 +168,4 @@ nmap <Leader>C :ClangFormatAutoToggle<CR>
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 hi Search ctermbg=DarkYellow
 
+command! Ga call system('git add ' . bufname(2)) | echom "Git added: " . bufname(2)
