@@ -208,6 +208,8 @@ alias cdcpp="cd \$(git rev-parse --show-toplevel)/cpp/build/latest &>/dev/null |
 #alias ctagsall="cd \$CUDF_HOME; ctags -R --exclude=python/cudf/cudf/bindings/*.pxd --languages=C,C++,Python .; cd -"
 alias b="build-cudf-cpp -n"
 alias bp="build-cudf-python"
+alias b="pushd _build/release; ninja velox_tpch_benchmark; popd"
+alias docrun="docker-compose -f docker-compose.yml  -f ~/docker-compose.override.yml run -e NUM_THREADS=$(nproc) --rm adapters-cuda /bin/bash"
 
 ## Custom notifications
 alias slacknotify=curl_slack_notify.sh
