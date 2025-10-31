@@ -4,6 +4,7 @@ if [ ! -e ~/.local/bin/chezmoi ]; then
 fi
 #bash -c "chezmoi init --apply https://github.com/karthikeyann/dotfiles.git"
 bash -c "chezmoi init --apply karthikeyann --force"
+bash -c "chezmoi update"
 echo "Installed dotfiles"
 
 if [ -e ~/.local/bin/nvim ]; then
